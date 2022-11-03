@@ -12,6 +12,35 @@ app = Flask(__name__)
 def index():
     return "Waiting for the thunder"
 
+@app.route('/status', methods=['POST'])
+def status():
+    data = request.json
+
+    if data['api_key'] != APP_KEY:
+        return 'invalid key'
+
+    answer = {
+        "is_tracking_data": False,
+        "supported_scenarios": [],
+        "tracked_contracts": []
+    }
+
+    return json.dumps(answer)
+
+
+@app.route('/init', methods=['POST'])
+def init():
+    return 'ok'
+
+
+@app.route('/remove', methods=['POST'])
+def remove():
+    return 'ok'
+
+@app.route('/message', methods=['POST'])
+def save_message():
+    return "ok"
+
 
 # settings and views
 @app.route('/settings', methods=['GET'])
@@ -23,6 +52,8 @@ def get_settings(args, form):
 @verify_args
 def get_video(args, form):
     return render_template('video.html')
+
+
 
 if __name__ == "__main__":
     app.run(HOST, PORT, debug=API_DEBUG)
