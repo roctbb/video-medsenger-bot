@@ -16,9 +16,6 @@ def index():
 def status():
     data = request.json
 
-    if data['api_key'] != APP_KEY:
-        return 'invalid key'
-
     answer = {
         "is_tracking_data": False,
         "supported_scenarios": [],
